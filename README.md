@@ -13,4 +13,4 @@
 
 
 ## Result
-![result.jpg](result.png)
+![result.png](./yolox/result.png)
