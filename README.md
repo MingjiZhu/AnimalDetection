@@ -13,4 +13,4 @@
 
 
 ## Result
-![result.png](./yolox/result.png)
+<img src="./yolox/result.png" width="300" />
