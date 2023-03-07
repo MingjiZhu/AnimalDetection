@@ -7,10 +7,9 @@
     ```
     python3 demo.py --input dog.png
     ```
-3. Suspend server in terminal
+3. Terminate detector in terminal
 
-    <button name="shift">shift</button> + <button name="shift">control</button> + <button name="shift">z</button>
-
+    <button name="shift">control</button> + <button name="shift">d</button>
 
 ## Result
 <img src="./yolox/result.png" width="300" />
