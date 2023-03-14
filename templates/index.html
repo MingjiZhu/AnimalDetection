@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+    <title>AnimalDetection</title>
+</head>
+<body>
+   <h1>Welcome to Animal Detection</h1>
+   <form method=post enctype=multipart/form-data>
+    <input type=file name=file>
+    <input type=submit value=Upload>
+  </form>
+  <!-- <img src="{{ url_for('static', filename= 'results/images.jpeg') }}"> -->
+</body>
+</html>

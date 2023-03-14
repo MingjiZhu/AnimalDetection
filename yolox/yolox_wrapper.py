@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import argparse
 
-from yolox import YoloX
+from AnimalDetection.yolox.yolox import YoloX
 
 def str2bool(v):
     if v.lower() in ['on', 'yes', 'true', 'y', 't']:
@@ -76,30 +76,43 @@ def vis(dets, srcimg, letterbox_scale, fps=None):
 
     return res_img
 
-if __name__=='__main__':
-    parser = argparse.ArgumentParser(description='Nanodet inference using OpenCV an contribution by Sri Siddarth Chakaravarthy part of GSOC_2022')
-    parser.add_argument('--input', '-i', type=str, help='Path to the input image. Omit for using default camera.')
-    parser.add_argument('--model', '-m', type=str, default='yolox/object_detection_yolox_2022nov.onnx', help="Path to the model")
-    parser.add_argument('--backend', '-b', type=int, default=backends[0], help=help_msg_backends.format(*backends))
-    parser.add_argument('--target', '-t', type=int, default=targets[0], help=help_msg_targets.format(*targets))
-    parser.add_argument('--confidence', default=0.5, type=float, help='Class confidence')
-    parser.add_argument('--nms', default=0.5, type=float, help='Enter nms IOU threshold')
-    parser.add_argument('--obj', default=0.5, type=float, help='Enter object threshold')
-    parser.add_argument('--save', '-s', type=str2bool, default=False, help='Set true to save results. This flag is invalid when using camera.')
-    parser.add_argument('--vis', '-v', type=str2bool, default=True, help='Set true to open a window for result visualization. This flag is invalid when using camera.')
-    args = parser.parse_args()
+def executeModel(input):
+    print(input)
+    # parser = argparse.ArgumentParser(description='Nanodet inference using OpenCV an contribution by Sri Siddarth Chakaravarthy part of GSOC_2022')
+    # parser.add_argument('--input', '-i', type=str, help='Path to the input image. Omit for using default camera.')
+    # parser.add_argument('--model', '-m', type=str, default='yolox/object_detection_yolox_2022nov.onnx', help="Path to the model")
+    # parser.add_argument('--backend', '-b', type=int, default=backends[0], help=help_msg_backends.format(*backends))
+    # parser.add_argument('--target', '-t', type=int, default=targets[0], help=help_msg_targets.format(*targets))
+    # parser.add_argument('--confidence', default=0.5, type=float, help='Class confidence')
+    # parser.add_argument('--nms', default=0.5, type=float, help='Enter nms IOU threshold')
+    # parser.add_argument('--obj', default=0.5, type=float, help='Enter object threshold')
+    # parser.add_argument('--save', '-s', type=str2bool, default=False, help='Set true to save results. This flag is invalid when using camera.')
+    # parser.add_argument('--vis', '-v', type=str2bool, default=True, help='Set true to open a window for result visualization. This flag is invalid when using camera.')
+    # args = parser.parse_args()
 
-    model_net = YoloX(modelPath= args.model,
-                      confThreshold=args.confidence,
-                      nmsThreshold=args.nms,
-                      objThreshold=args.obj,
-                      backendId=args.backend,
-                      targetId=args.target)
+    args = {
+        'input': input,
+        'model': 'yolox/object_detection_yolox_2022nov.onnx',
+        'backend': 3,
+        'target': 0,
+        'confidence': 0.5,
+        'nms': 0.5,
+        'obj': 0.5,
+        'save': True,
+        'vis': False,
+    }
+
+    model_net = YoloX(modelPath= args['model'],
+                      confThreshold=args['confidence'],
+                      nmsThreshold=args['nms'],
+                      objThreshold=args['obj'],
+                      backendId=args['backend'],
+                      targetId=args['target'])
 
     tm = cv2.TickMeter()
     tm.reset()
-    if args.input is not None:
-        image = cv2.imread(args.input)
+    if args['input'] is not None:
+        image = cv2.imread(args['input'])
         input_blob = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         input_blob, letterbox_scale = letterbox(input_blob)
 
@@ -111,13 +124,14 @@ if __name__=='__main__':
 
         img = vis(preds, image, letterbox_scale)
 
-        if args.save:
-            print('Resutls saved to result.jpg\n')
-            cv2.imwrite('result.jpg', img)
+        if args['save']:
+            print('Resutls saved to result\n')
+            filename = input.split('/')[-1]
+            cv2.imwrite(f"static/results/{filename}", img)
 
-        if args.vis:
-            cv2.namedWindow(args.input, cv2.WINDOW_AUTOSIZE)
-            cv2.imshow(args.input, img)
+        if args['vis']:
+            cv2.namedWindow(args['input'], cv2.WINDOW_AUTOSIZE)
+            cv2.imshow(args['input'], img)
             cv2.waitKey(0)
 
     else:

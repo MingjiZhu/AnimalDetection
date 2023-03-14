@@ -13,3 +13,21 @@
 
 ## Result
 <img src="./yolox/result.png" width="300" />
+
+## flask
+install
+```
+pip install flask
+```
+
+run
+```
+export FLASK_APP=index
+export FLASK_ENV=development
+flask run
+```
+
+open browser
+```
+http://127.0.0.1:5000/
+```
