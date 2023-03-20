@@ -127,7 +127,7 @@ def executeModel(input):
         if args['save']:
             print('Resutls saved to result\n')
             filename = input.split('/')[-1]
-            cv2.imwrite(f"static/results/{filename}", img)
+            cv2.imwrite(f"static/results/animal_result.png", img)
 
         if args['vis']:
             cv2.namedWindow(args['input'], cv2.WINDOW_AUTOSIZE)

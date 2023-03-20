@@ -1,16 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
-    <title>AnimalDetection</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+  <title>AnimalDetection</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      let selectedImage;
+      loadImage();
+      hideButtons("static/results/animal_result.png");
+      $("#inp-image").change(function () {
+        imgPreview(this);
+      });
+
+      function imgPreview(input) {
+        if (input.files && input.files[0]) {
+          let reader = new FileReader();
+          reader.onload = function (e) {
+            selectedImage = e.target.result;
+            $("#preview-image").show().attr("src", e.target.result);
+          }
+          reader.readAsDataURL(input.files[0]);
+          $("#detect-button").show()
+        }
+      }
+
+      function loadImage() {
+        if (!selectedImage) {
+          $("#preview-image").show().attr("src", "static/results/animal_result.png");
+        }
+      }
+
+      function hideButtons(animal_result) {
+        $.get(animal_result, function (data, textStatus) {
+          if (textStatus == "success") {
+            $("#detect-button").hide()
+            $("#download-button").show()
+          }
+          else {
+            $("#detect-button").show()
+            $("#download-button").hide()
+          }
+        })
+      }
+
+    })
+  </script>
 </head>
+
 <body>
-   <h1>Welcome to Animal Detection</h1>
-   <form method=post enctype=multipart/form-data>
-    <input type=file name=file>
-    <input type=submit value=Upload>
+  <h1>Welcome to Animal Detection</h1>
+  <form method=post enctype=multipart/form-data>
+    <img src="" id="preview-image" alt="selected image" style="visibility:hidden;"
+      onload="this.style.visibility='visible'">
+    <input type=file accept="image/*" name="file" id="inp-image" style="color:transparent;"
+      onchange="this.style.color = 'black';">
+    <input type=submit value=Detect id="detect-button" style="display: none; visibility: visible;">
+    <a download="animal_result.png" href="static/results/animal_result.png" title="Animal Result" id="download-button"
+      style="display: none; visibility: visible;">
+      Download
+    </a>
+    </div>
   </form>
-  <!-- <img src="{{ url_for('static', filename= 'results/images.jpeg') }}"> -->
 </body>
+
 </html>
