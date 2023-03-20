@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 from AnimalDetection.yolox.yolox_wrapper import executeModel
 
 UPLOAD_FOLDER = 'static/uploads'
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -27,7 +27,7 @@ def index():
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
+            filename = secure_filename('animal.png')
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             executeModel(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('index', name=filename))
