@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import argparse
 
-from AnimalDetection.yolox.yolox import YoloX
+import YoloX from yolox 
 
 def str2bool(v):
     if v.lower() in ['on', 'yes', 'true', 'y', 't']:
