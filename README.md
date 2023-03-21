@@ -9,7 +9,7 @@
     ```
 3. Terminate detector in terminal
 
-    <button name="shift">control</button> + <button name="shift">d</button>
+    <button name="shift">control</button> + <button name="shift">c</button>
 
 ## Result
 <img src="./yolox/result.png" width="300" />

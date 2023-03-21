@@ -1,11 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
   <title>AnimalDetection</title>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+</head>
+
+<body>
+  <h1>Welcome to Animal Detection</h1>
+  <form method=post enctype=multipart/form-data>
+    <img src="" id="preview-image" alt="selected image" style="visibility:hidden;"
+      onload="this.style.visibility='visible'">
+    <input type=file accept="image/*" name="file" id="inp-image" style="color:transparent;"
+      onchange="this.style.color = 'black';">
+    <input type=submit value=Detect id="detect-button" style="display: none; visibility: visible;">
+    <a download="animal_result.png" href="static/results/animal_result.png" title="Animal Result" id="download-button"
+      style="display: none; visibility: visible;">
+      Download
+    </a>
+    </div>
+  </form>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   <script type="text/javascript">
     $(document).ready(function () {
       let selectedImage;
@@ -45,25 +60,8 @@
           }
         })
       }
-
     })
   </script>
-</head>
-
-<body>
-  <h1>Welcome to Animal Detection</h1>
-  <form method=post enctype=multipart/form-data>
-    <img src="" id="preview-image" alt="selected image" style="visibility:hidden;"
-      onload="this.style.visibility='visible'">
-    <input type=file accept="image/*" name="file" id="inp-image" style="color:transparent;"
-      onchange="this.style.color = 'black';">
-    <input type=submit value=Detect id="detect-button" style="display: none; visibility: visible;">
-    <a download="animal_result.png" href="static/results/animal_result.png" title="Animal Result" id="download-button"
-      style="display: none; visibility: visible;">
-      Download
-    </a>
-    </div>
-  </form>
 </body>
 
 </html>
