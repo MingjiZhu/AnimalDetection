@@ -126,7 +126,6 @@ def executeModel(input):
 
         if args['save']:
             print('Resutls saved to result\n')
-            filename = input.split('/')[-1]
             cv2.imwrite(f"static/results/animal_result.png", img)
 
         if args['vis']:

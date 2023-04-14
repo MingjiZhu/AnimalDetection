@@ -1,7 +1,8 @@
 import os
 from flask import Flask, render_template, request, flash, redirect, url_for
 from werkzeug.utils import secure_filename
-from yolox.yolox_wrapper import executeModel 
+# from AnimalDetection.yolox.yolox_wrapper import executeModel
+from AnimalDetection.yolov8.yolov8_wrapper import detect
 
 UPLOAD_FOLDER = './static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -29,6 +30,7 @@ def index():
         if file and allowed_file(file.filename):
             filename = secure_filename('animal.png')
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            executeModel(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            # executeModel(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            detect(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('index', name=filename))
     return render_template('index.html')
