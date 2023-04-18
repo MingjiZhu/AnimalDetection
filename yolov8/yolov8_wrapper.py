@@ -7,7 +7,7 @@ from ultralytics.yolo.utils import ROOT, yaml_load
 from ultralytics.yolo.utils.checks import check_yaml
 
 CLASSES = yaml_load(check_yaml('coco128.yaml'))['names']
-# CLASSES = yaml_load(check_yaml('/Users/ayatsubakino/sites/private/opencv_projects/AnimalDetection/yolov8/Cats.v2-2022-02-17.yolov8/data.yaml'))['names']
+# CLASSES = yaml_load(check_yaml('yolov8/Cats.v2-2022-02-17.yolov8/data.yaml'))['names']
 
 colors = np.random.uniform(0, 255, size=(len(CLASSES), 3))
 
@@ -72,12 +72,12 @@ def main(onnx_model, input_image):
 
 def detect(input):
 		args = {
-			'model': '/Users/ayatsubakino/sites/private/opencv_projects/AnimalDetection/yolov8/yolov8n.onnx',
+			'model': 'yolov8/yolov8n.onnx',
 			'img': input
 		}
 		# use trained model. change the image size from 640 to 416 too
 		# args = {
-		# 	'model': '/Users/ayatsubakino/sites/private/opencv_projects/AnimalDetection/yolov8/best.onnx',
+		# 	'model': 'yolov8/best.onnx',
 		# 	'img': input
 		# }
 		main(args['model'], args['img'])

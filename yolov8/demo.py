@@ -66,7 +66,6 @@ def main(onnx_model, input_image):
                           round((box[0] + box[2]) * scale), round((box[1] + box[3]) * scale))
 
     cv2.imwrite(f"animal_result.png", original_image)
-    # cv2.imwrite(f"static/results/animal_result.png", original_image)
     cv2.imshow('image', original_image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
@@ -76,7 +75,7 @@ def main(onnx_model, input_image):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', default='/Users/ayatsubakino/sites/private/opencv_projects/AnimalDetection/yolov8/yolov8n.onnx', help='Input your onnx model.')
+    parser.add_argument('--model', default='yolov8n.onnx', help='Input your onnx model.')
     parser.add_argument('--img', default=str(ROOT / 'assets/bus.jpg'), help='Path to input image.')
     args = parser.parse_args()
     main(args.model, args.img)
