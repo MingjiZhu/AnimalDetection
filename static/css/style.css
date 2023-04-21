@@ -6,7 +6,6 @@ h1 {
   color: brown;
   text-align: center;
   padding: 10px;
-  font-family: 'Patrick Hand', cursive;
 }
 
 a {
@@ -30,6 +29,7 @@ input {
   text-align: center;
   border: 1px solid transparent;
   padding: 6px 12px;
+  font-family: 'Patrick Hand', cursive;
   font-size: 16px;
   border-radius: .25rem;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;

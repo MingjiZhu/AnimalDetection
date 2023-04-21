@@ -19,10 +19,22 @@
     <div>
       <input type=file accept="image/*" name="file" id="inp-image" onchange="this.style.color = 'black';">
     </div>
-    <div>
+    <div style="display: flex; flex-direction: column; align-items: center; margin: 10px 0">
+      <div id="model-select">
+        <input type="radio" id="object" name="model" value="Object" checked>
+        <label for="object">Object</label>
+        <input type="radio" id="animal" name="model" value="Animal">
+        <label for="animal">Animal</label>
+      </div>
       <button type=submit id="detect-button" style="display: none;">Detect</button>
+    </div>
+    <div id="description">
+      <small>※ Object: detect <a href="https://tech.amikelive.com/node-718/what-object-categories-labels-are-in-coco-dataset/" target="_blank" style="padding: 0">80 classes</a></small><br>
+      <small>※ Animal: detect 'Bird', 'Cat', 'Dog', 'Monkey', 'Squirrel'</small>
+    </div>
+    <div style="margin-top: 10px">
       <a download="animal_result.png" href="static/results/animal_result.png" title="Animal Result" id="download-button"
-        style="display: none; font-size: 1.5em;">
+      style="display: none; font-size: 1.5em;">
         Download
       </a>
     </div>
@@ -55,6 +67,8 @@
             $("#preview-image").show().attr("src", e.target.result);
           }
           reader.readAsDataURL(input.files[0]);
+          $('#description').show()
+          $('#model-select').show()
           $("#detect-button").show()
         }
       }
@@ -68,9 +82,13 @@
       function hideButtons(animal_result) {
         $.get(animal_result, function (data, textStatus) {
           if (textStatus == "success") {
+            $('#description').hide()
+            $('#model-select').hide();
             $("#detect-button").hide()
             $("#download-button").show()
           } else {
+            $('#description').show()
+            $('#model-select').show();
             $("#detect-button").show()
             $("#download-button").hide()
           }

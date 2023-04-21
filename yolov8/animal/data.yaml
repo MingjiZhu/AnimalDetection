@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 5
+names: ['Bird', 'Cat', 'Dog', 'Monkey', 'Squirrel']
+
+roboflow:
+  workspace: new-workspace-x0ijl
+  project: animal-detection-dy7jy
+  version: 2
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/new-workspace-x0ijl/animal-detection-dy7jy/dataset/2

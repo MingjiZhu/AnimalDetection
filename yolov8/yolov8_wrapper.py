@@ -6,29 +6,29 @@ import numpy as np
 from ultralytics.yolo.utils import ROOT, yaml_load
 from ultralytics.yolo.utils.checks import check_yaml
 
-CLASSES = yaml_load(check_yaml('coco128.yaml'))['names']
-# CLASSES = yaml_load(check_yaml('yolov8/Cats.v2-2022-02-17.yolov8/data.yaml'))['names']
+# COCO_CLASSES = yaml_load(check_yaml('coco128.yaml'))['names'].values()
+# ANIMAL_CLASSES = yaml_load(check_yaml('yolov8/animal/data.yaml'))['names']
+# CLASSES = list(COCO_CLASSES) + list(ANIMAL_CLASSES)
+# print(CLASSES)
 
-colors = np.random.uniform(0, 255, size=(len(CLASSES), 3))
+# colors = np.random.uniform(0, 255, size=(len(CLASSES), 3))
 
-
-def draw_bounding_box(img, class_id, confidence, x, y, x_plus_w, y_plus_h):
-    label = f'{CLASSES[class_id]} ({confidence:.2f})'
+def draw_bounding_box(classes, img, class_id, confidence, x, y, x_plus_w, y_plus_h):
+    label = f'{classes[class_id]} ({confidence:.2f})'
+    colors = np.random.uniform(0, 255, size=(len(classes), 3))
     color = colors[class_id]
     cv2.rectangle(img, (x, y), (x_plus_w, y_plus_h), color, 2)
     cv2.putText(img, label, (x - 10, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
 
-
-def main(onnx_model, input_image):
+def main(onnx_model, input_image, classes, img_size):
     model: cv2.dnn.Net = cv2.dnn.readNetFromONNX(onnx_model)
     original_image: np.ndarray = cv2.imread(input_image)
     [height, width, _] = original_image.shape
     length = max((height, width))
     image = np.zeros((length, length, 3), np.uint8)
     image[0:height, 0:width] = original_image
-    scale = length / 640
-
-    blob = cv2.dnn.blobFromImage(image, scalefactor=1 / 255, size=(640, 640), swapRB=True)
+    scale = length / img_size
+    blob = cv2.dnn.blobFromImage(image, scalefactor=1 / 255, size=(img_size, img_size), swapRB=True)
     model.setInput(blob)
     outputs = model.forward()
 
@@ -58,26 +58,33 @@ def main(onnx_model, input_image):
         box = boxes[index]
         detection = {
             'class_id': class_ids[index],
-            'class_name': CLASSES[class_ids[index]],
+            'class_name': classes[class_ids[index]],
             'confidence': scores[index],
             'box': box,
             'scale': scale}
         detections.append(detection)
-        draw_bounding_box(original_image, class_ids[index], scores[index], round(box[0] * scale), round(box[1] * scale),
+        draw_bounding_box(classes, original_image, class_ids[index], scores[index], round(box[0] * scale), round(box[1] * scale),
                           round((box[0] + box[2]) * scale), round((box[1] + box[3]) * scale))
 
     cv2.imwrite(f"static/results/animal_result.png", original_image)
     return detections
 
 
-def detect(input):
-		args = {
-			'model': 'yolov8/yolov8n.onnx',
-			'img': input
-		}
-		# use trained model. change the image size from 640 to 416 too
-		# args = {
-		# 	'model': 'yolov8/best.onnx',
-		# 	'img': input
-		# }
-		main(args['model'], args['img'])
+def detect(input, model):
+        if model == 'Animal':
+            CLASSES =  yaml_load(check_yaml('yolov8/animal/data.yaml'))['names']
+            args = {
+                'model': 'yolov8/best.onnx',
+                'img': input,
+                'classes': CLASSES,
+                'img_size': 224
+            }
+        else:
+            CLASSES = yaml_load(check_yaml('coco128.yaml'))['names']
+            args = {
+			    'model': 'yolov8/yolov8n.onnx',
+			    'img': input,
+                'classes': CLASSES,
+                'img_size': 640
+		    }
+        main(args['model'], args['img'], args['classes'], args['img_size'])
