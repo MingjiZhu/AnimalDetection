@@ -11,7 +11,7 @@ def draw_bounding_box(classes, img, class_id, confidence, x, y, x_plus_w, y_plus
     colors = np.random.uniform(0, 255, size=(len(classes), 3))
     color = colors[class_id]
     cv2.rectangle(img, (x, y), (x_plus_w, y_plus_h), color, 2)
-    cv2.putText(img, label, (x - 10, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
+    cv2.putText(img, label, (x + 10, y + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
 
 def main(onnx_model, input_image, classes, img_size):
     model: cv2.dnn.Net = cv2.dnn.readNetFromONNX(onnx_model)
