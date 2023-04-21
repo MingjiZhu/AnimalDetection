@@ -6,13 +6,6 @@ import numpy as np
 from ultralytics.yolo.utils import ROOT, yaml_load
 from ultralytics.yolo.utils.checks import check_yaml
 
-# COCO_CLASSES = yaml_load(check_yaml('coco128.yaml'))['names'].values()
-# ANIMAL_CLASSES = yaml_load(check_yaml('yolov8/animal/data.yaml'))['names']
-# CLASSES = list(COCO_CLASSES) + list(ANIMAL_CLASSES)
-# print(CLASSES)
-
-# colors = np.random.uniform(0, 255, size=(len(CLASSES), 3))
-
 def draw_bounding_box(classes, img, class_id, confidence, x, y, x_plus_w, y_plus_h):
     label = f'{classes[class_id]} ({confidence:.2f})'
     colors = np.random.uniform(0, 255, size=(len(classes), 3))

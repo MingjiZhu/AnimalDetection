@@ -1,7 +1,8 @@
 import os
 from flask import Flask, render_template, request, flash, redirect, url_for
 from werkzeug.utils import secure_filename
-from AnimalDetection.yolov8.yolov8_wrapper import detect
+# from AnimalDetection.yolov8.yolov8_wrapper import detect
+from yolov8.yolov8_wrapper import detect
 
 UPLOAD_FOLDER = './static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
