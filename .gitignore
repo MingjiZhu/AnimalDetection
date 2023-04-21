@@ -1,5 +1,6 @@
 .DS_Store
 __pycache__
-yolov8/Cats.v2-2022-02-17.yolov8/test
-yolov8/Cats.v2-2022-02-17.yolov8/train
-yolov8/Cats.v2-2022-02-17.yolov8/valid
+yolov8/animal/test
+yolov8/animal/train
+yolov8/animal/valid
+unused-models
