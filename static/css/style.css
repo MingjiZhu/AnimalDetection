@@ -35,6 +35,20 @@ input {
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+.loading {
+  cursor: wait !important;
+  background-color: #0d6dfdae !important;
+}
+
+#detect-loading-icon {
+  margin-right: 5px;
+  display: none;
+}
+
+.loading #detect-loading-icon {
+  display: inline-block;
+}
+
 #detect-button:hover {
   color: #fff;
   background-color: #0b5ed7;

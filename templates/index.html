@@ -6,6 +6,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <title>AnimalDetection</title>
 </head>
 
@@ -26,7 +27,9 @@
         <input type="radio" id="animal" name="model" value="Animal">
         <label for="animal">Animal</label>
       </div>
-      <button type=submit id="detect-button" style="display: none;">Detect</button>
+      <button type=submit id="detect-button" style="display: none;">
+        <i id="detect-loading-icon" class="fa fa-circle-o-notch fa-spin"></i>Detect
+      </button>
     </div>
     <div id="description">
       <small>※ Object: detect <a href="https://tech.amikelive.com/node-718/what-object-categories-labels-are-in-coco-dataset/" target="_blank" style="padding: 0">80 classes</a></small><br>
@@ -78,6 +81,10 @@
           $("#preview-image").show().attr("src", "static/results/animal_result.png");
         }
       }
+
+      $("#detect-button").on( "click", function() {
+        $("#detect-button").addClass("loading");
+      } );
 
       function hideButtons(animal_result) {
         $.get(animal_result, function (data, textStatus) {
